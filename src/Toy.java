@@ -1,13 +1,18 @@
-public class Toy extends Thread{
-    private final Box box;
-
-    public Toy(String name, Box box) {
-        super(name);
-        this.box = box;
-    }
+public class Toy implements Runnable {
+    private final long time_off = 500L;
 
     @Override
     public void run() {
-        box.off();
+        try {
+            while (true) {
+                if (TumblerSwitch.isTumblerSwitch()) {
+                    Thread.sleep(time_off);
+                    TumblerSwitch.setTumblerSwitch(false);
+                    System.out.println("cat turn off");
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
